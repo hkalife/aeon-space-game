@@ -21,7 +21,7 @@ public class LaserController : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision col) {
-        if (col.gameObject.name == "target") {
+        if (col.gameObject.tag == "Target") {
             Destroy(col.gameObject);
             Destroy(gameObject);
         }
