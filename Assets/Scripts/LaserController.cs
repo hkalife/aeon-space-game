@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class LaserController : MonoBehaviour
 {
+    private IEnumerator coroutine;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        Destroy(gameObject, 5);
     }
 
     // Update is called once per frame
@@ -17,4 +19,12 @@ public class LaserController : MonoBehaviour
             transform.position += transform.forward * Time.deltaTime * 500;
         }
     }
+
+    void OnCollisionEnter(Collision col) {
+        if (col.gameObject.name == "target") {
+            Destroy(col.gameObject);
+            Destroy(gameObject);
+        }
+    }
+
 }
