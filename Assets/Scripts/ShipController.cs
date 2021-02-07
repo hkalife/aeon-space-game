@@ -16,17 +16,17 @@ public class ShipController : MonoBehaviour
     [SerializeField]
     private GameObject rightLaser;
 
-    Quaternion originalRotationShipMesh;
-    Vector3 originalRotationController;
+    [SerializeField]
+    private GameObject leftLaserPosition;
+
+    [SerializeField]
+    private GameObject rightLaserPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
-
-        originalRotationShipMesh = this.gameObject.transform.GetChild(0).rotation;
-        originalRotationController = transform.rotation.eulerAngles;
     }
 
     // Update is called once per frame
@@ -44,18 +44,14 @@ public class ShipController : MonoBehaviour
 
         transform.position += transform.forward * Time.deltaTime * shipSpeed;
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) {
-            GameObject newLeftLaser = Instantiate(leftLaser, leftLaser.transform.position, leftLaser.transform.rotation);
-            GameObject newRightLaser = Instantiate(rightLaser, rightLaser.transform.position, rightLaser.transform.rotation);
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
+            GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
             newLeftLaser.SetActive(true);
             newRightLaser.SetActive(true);
         }
 
         OriginalRotation();
-    }
-
-    float ConvertEulerToNegative(float eulerAngle) {
-        return (eulerAngle > 180) ? eulerAngle - 360 : eulerAngle;
     }
 
     void OriginalRotation() {
