@@ -15,7 +15,7 @@ public class FollowCam : MonoBehaviour
     public float smoothTime = 0.125f;
     float angle;
 
-    void Update() {
+    void FixedUpdate() {
         cameraPosition = target.position - (target.forward * distance) + target.up * distance * 0.25f;
         smoothPosition = Vector3.Lerp(transform.position, cameraPosition, smoothTime);
         transform.position = smoothPosition;

@@ -2739,6 +2739,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Ship
       objectReference: {fileID: 0}
+    - target: {fileID: 2893502277384226712, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2893502277384226714, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933,
+        type: 3}
+      propertyPath: forwardSpeed
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2893502277384226715, guid: 7b1f6fd0e53a5a24d8adbfa81c68e933,
         type: 3}
       propertyPath: m_RootOrder
