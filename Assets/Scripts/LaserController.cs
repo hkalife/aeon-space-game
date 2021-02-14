@@ -8,7 +8,6 @@ public class LaserController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("starting laser");
         Destroy(gameObject, 5);
     }
 

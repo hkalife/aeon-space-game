@@ -16,22 +16,11 @@ public class FollowCam : MonoBehaviour
     float angle;
 
     void Update() {
-        //BackCam();
         cameraPosition = target.position - (target.forward * distance) + target.up * distance * 0.25f;
         smoothPosition = Vector3.Lerp(transform.position, cameraPosition, smoothTime);
         transform.position = smoothPosition;
 
         angle = Mathf.Abs(Quaternion.Angle(transform.rotation, target.rotation));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, target.rotation, (rotationSpeed + angle) * Time.deltaTime);
-    }
-
-    void BackCam() {
-        cameraPosition = target.position - (target.forward * distance) + target.up * distance * 0.25f;
-        smoothPosition = Vector3.Lerp(transform.position, cameraPosition, smoothTime);
-        transform.position = smoothPosition;
-
-        angle = Mathf.Abs(Quaternion.Angle(transform.rotation, target.rotation));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, target.rotation, (rotationSpeed + angle) * Time.deltaTime);
-
     }
 }

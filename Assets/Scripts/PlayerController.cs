@@ -58,9 +58,8 @@ public class PlayerController : MonoBehaviour
         transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
         transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime) + (transform.up * activeHoverSpeed * Time.deltaTime);
 
-        //laser control
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Debug.Log("press space");
+        //call laser control
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) {
             GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
             GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
             newLeftLaser.SetActive(true);
