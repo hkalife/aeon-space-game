@@ -36,6 +36,16 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
     }
 
+    void Update() {
+        //call laser control
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) {
+            GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
+            GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
+            newLeftLaser.SetActive(true);
+            newRightLaser.SetActive(true);
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -57,13 +67,5 @@ public class PlayerController : MonoBehaviour
 
         transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
         transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime) + (transform.up * activeHoverSpeed * Time.deltaTime);
-
-        //call laser control
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) {
-            GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
-            GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
-            newLeftLaser.SetActive(true);
-            newRightLaser.SetActive(true);
-        }
     }
 }
