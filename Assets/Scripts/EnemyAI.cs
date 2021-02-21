@@ -8,7 +8,8 @@ public class EnemyAI : MonoBehaviour
     private enum State {
         Stop,
         ChasePlayer,
-        AttackPlayer
+        AttackPlayer,
+        ChaseAndAttack
     }
 
     [SerializeField]
@@ -55,15 +56,15 @@ public class EnemyAI : MonoBehaviour
 
     void ChasePlayer() {
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-        
-        if (distanceToPlayer > 150.0f) {
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 50f * Time.deltaTime);
-        }
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 50f * Time.deltaTime);
 
-        transform.LookAt(player.transform.position);
+        Quaternion lookOnLook = Quaternion.LookRotation(player.transform.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, Time.deltaTime * 5);
     }
 
     void AttackPlayer() {
+        Quaternion lookOnLook = Quaternion.LookRotation(player.transform.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, Time.deltaTime * 5);
         if (allowAttack) {
             GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
             GameObject newRightLaser = Instantiate(rightLaser, rightLaserPosition.transform.position, rightLaserPosition.transform.rotation);
@@ -74,13 +75,20 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    void ChaseAndAttack() {
+        AttackPlayer();
+        ChasePlayer();
+    }
+
     void HandleStateMachine() {
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-        if (distanceToPlayer > 150.0f) {
-            state = State.ChasePlayer;
-        } else if (distanceToPlayer < 300.0f) {
+        if (distanceToPlayer < 150.0f) {
             state = State.AttackPlayer;
-        } else if (distanceToPlayer > 300.0f) {
+        } else if (distanceToPlayer > 150.0f && distanceToPlayer < 300.0f) {
+            state = State.ChaseAndAttack;
+        } else if (distanceToPlayer > 300.0f && distanceToPlayer < 450.0f) {
+            state = State.ChasePlayer;
+        } else if (distanceToPlayer > 450.0f) {
             state = State.Stop;
         }
     }
@@ -95,6 +103,9 @@ public class EnemyAI : MonoBehaviour
                 break;
             case State.AttackPlayer:
                 AttackPlayer();
+                break;
+            case State.ChaseAndAttack:
+                ChaseAndAttack();
                 break;
         }
     }
