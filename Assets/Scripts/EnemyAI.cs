@@ -30,17 +30,20 @@ public class EnemyAI : MonoBehaviour
 
     private bool allowAttack;
 
+    [SerializeField]
+    private int enemyHealth;
+
     // Start is called before the first frame update
     void Start()
     {
         state = State.Stop;
         player = GameObject.Find("Player Ship");
         allowAttack = true;
+        enemyHealth = 100;
     }
 
     void Update() {
-        /*HandleStateMachine();
-        ActionsStateMachine();*/
+        CheckLife();
     }
 
     // Update is called once per frame
@@ -99,5 +102,15 @@ public class EnemyAI : MonoBehaviour
     IEnumerator WaitSeconds(int seconds) {
         yield return new WaitForSeconds(2);
         allowAttack = true;
+    }
+
+    public void DamageForEnemy() {
+        enemyHealth -= 50;
+    }
+
+    public void CheckLife() {
+        if (enemyHealth <= 0) {
+            Destroy(gameObject);
+        }
     }
 }

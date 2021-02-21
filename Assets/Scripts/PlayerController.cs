@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject rightLaserPosition;
 
+    [SerializeField]
+    private int playerHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,9 +37,12 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
+
+        playerHealth = 100;
     }
 
     void Update() {
+        CheckLife();
         //call laser control
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) {
             GameObject newLeftLaser = Instantiate(leftLaser, leftLaserPosition.transform.position, leftLaserPosition.transform.rotation);
@@ -67,5 +73,15 @@ public class PlayerController : MonoBehaviour
 
         transform.position += transform.forward * activeForwardSpeed * Time.deltaTime;
         transform.position += (transform.right * activeStrafeSpeed * Time.deltaTime) + (transform.up * activeHoverSpeed * Time.deltaTime);
+    }
+
+    public void DamageForPlayer() {
+        playerHealth = playerHealth - 5;
+    }
+
+    public void CheckLife() {
+        if (playerHealth <= 0) {
+            gameObject.SetActive(false);
+        }
     }
 }
