@@ -121,6 +121,9 @@ public class EnemyAI : MonoBehaviour
 
     public void CheckLife() {
         if (enemyHealth <= 0) {
+            PlayerController scriptPlayer = player.GetComponent<PlayerController>();
+            scriptPlayer.AddScore();
+
             Destroy(gameObject);
         }
     }

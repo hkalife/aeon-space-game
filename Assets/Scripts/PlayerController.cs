@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -29,6 +31,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int playerHealth;
 
+    public HealthBar healthBar;
+
+    public int playerScore;
+    
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +48,9 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         playerHealth = 100;
+        healthBar.SetMaxHealth(100);
+        playerScore = 0;
+        scoreText.text = playerScore.ToString();
     }
 
     void Update() {
@@ -77,6 +89,12 @@ public class PlayerController : MonoBehaviour
 
     public void DamageForPlayer() {
         playerHealth = playerHealth - 5;
+        healthBar.SetHealth(playerHealth);
+    }
+
+    public void AddScore() {
+        playerScore += 10;
+        scoreText.text = playerScore.ToString();
     }
 
     public void CheckLife() {
@@ -84,4 +102,5 @@ public class PlayerController : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
 }
